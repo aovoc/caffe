@@ -73,6 +73,7 @@ models/*
 
 # build, distribute, and bins (+ python proto bindings)
 build
+tmp
 .build_debug/*
 .build_release/*
 distribute/*
