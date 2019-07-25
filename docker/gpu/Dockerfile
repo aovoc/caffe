@@ -22,7 +22,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python-pip \
         python-setuptools \
         python-scipy && \
-    rm -rf /var/lib/apt/lists/*
+    #rm -rf /var/lib/apt/lists/*
+
+
+RUN mkdir  ~/.pip/
+RUN echo "[global]" >~/.pip/pip.conf
+RUN echo "index-url = https://pypi.tuna.tsinghua.edu.cn/simple" >>~/.pip/pip.conf
+
 
 ENV CAFFE_ROOT=/opt/caffe
 WORKDIR $CAFFE_ROOT
@@ -46,5 +52,17 @@ ENV PYCAFFE_ROOT $CAFFE_ROOT/python
 ENV PYTHONPATH $PYCAFFE_ROOT:$PYTHONPATH
 ENV PATH $CAFFE_ROOT/build/tools:$PYCAFFE_ROOT:$PATH
 RUN echo "$CAFFE_ROOT/build/lib" >> /etc/ld.so.conf.d/caffe.conf && ldconfig
+
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        tmux \
+        htop \
+        vim && \
+    #rm -rf /var/lib/apt/lists/*
+
+RUN pip install opencv-python
+RUN pip install pysnooper
+#RUN pip install scikit-image
+
 
 WORKDIR /workspace
